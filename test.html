@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MASHKOF REFOE</title>
+    <style>
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #f0f2f5; display: flex; justify-content: center; align-items: center; min-height: 100vh; margin: 0; }
+        .container { background: white; padding: 30px; border-radius: 15px; box-shadow: 0 10px 25px rgba(0,0,0,0.1); width: 100%; max-width: 450px; }
+        h2 { color: #1a73e8; text-align: center; margin-bottom: 5px; }
+        .subtitle { text-align: center; color: #5f6368; margin-bottom: 20px; font-weight: bold; }
+        label { display: block; margin-top: 15px; font-weight: 600; color: #3c4043; }
+        select { width: 100%; padding: 12px; margin-top: 5px; border: 2px solid #dadce0; border-radius: 8px; font-size: 16px; transition: border-color 0.3s; }
+        select:focus { border-color: #1a73e8; outline: none; }
+        button { width: 100%; background-color: #1a73e8; color: white; padding: 15px; border: none; border-radius: 8px; font-size: 18px; font-weight: bold; margin-top: 25px; cursor: pointer; transition: background 0.3s; }
+        button:hover { background-color: #1557b0; }
+        .results { margin-top: 25px; padding-top: 20px; border-top: 2px solid #eee; display: none; }
+        .res-item { display: flex; justify-content: space-between; padding: 8px 0; border-bottom: 1px solid #fafafa; }
+        .res-label { color: #5f6368; }
+        .res-value { font-weight: bold; color: #d93025; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+<h2>0525681138 - اكرم فرحات</h2>
+<div class="subtitle">فترة تجريبية في اطار التطوير ... رنلي اذا في مشاكل . </div>
+
+<label>Width - A </label>
+<select id="widthA">
+<option value="200">200</option>
+<option value="250">250</option>
+<option value="300">300</option>
+<option value="350">350</option>
+<option value="400">400</option>
+<option value="450">450</option>
+<option value="500">500</option>
+</select>
+
+<label> Height - L:</label>
+<select id="lengthL">
+<option value="2000">2000</option>
+<option value="2100">2100</option>
+</select>
+
+<label> (L.EL.TC):</label>
+<select id="tc">
+<option value="700">700</option>
+<option value="800">800</option>
+<option value="850">850</option>
+<option value="900">900</option>
+<option value="1000">1000</option>
+</select>
+
+<button onclick="calculate()">Calculate</button>
+
+<div id="results" class="results">
+<div class="res-item"><span class="res-label">عرض السير - וחב ציר  (W-CIR):</span> <span id="res_w_cir" class="res-value"></span></div>
+<div class="res-item"><span class="res-label">   عرض المنعول (W-3lyon):</span> <span id="res_w_man" class="res-value"></span></div>
+<div class="res-item"><span class="res-label">الطول (LENGTH):</span> <span id="res_len" class="res-value"></span></div>
+<div class="res-item"><span class="res-label">طول عليون/تحتون:</span> <span id="res_el_ta" class="res-value"></span></div>
+</div>
+</div>
+
+<script>
+    function calculate() {
+const A = parseInt(document.getElementById('widthA').value);
+const L = parseInt(document.getElementById('lengthL').value);
+const TC = parseInt(document.getElementById('tc').value);
+const W_CIR = A + 264;
+const W_MAN = A + 204;
+const LENGTH = L + 171;
+const EL_TA_LEN = TC + 94;
+
+document.getElementById('res_w_cir').innerText = W_CIR;
+document.getElementById('res_w_man').innerText = W_MAN;
+document.getElementById('res_len').innerText = LENGTH;
+document.getElementById('res_el_ta').innerText = EL_TA_LEN;
+
+   
+document.getElementById('results').style.display = 'block';
+    }
+</script>
+
+</body>
+</html>
