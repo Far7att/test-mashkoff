@@ -3,149 +3,213 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>- MASHKOF REFOE -  </title>
-    <title>For support call 0525681138 </title>
+    <title>MASHKOF REFOE PRO v2.4</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@600;700;900&display=swap" rel="stylesheet">
+    
     <style>
-        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #f0f2f5; display: flex; justify-content: center; align-items: center; min-height: 100vh; margin: 0; padding: 20px; }
-        .container { background: white; padding: 25px; border-radius: 15px; box-shadow: 0 10px 25px rgba(0,0,0,0.1); width: 100%; max-width: 500px; }
-        h2 { color: #1a73e8; text-align: center; margin-bottom: 5px; }
-        .subtitle { text-align: center; color: #5f6368; margin-bottom: 20px; font-weight: bold; font-size: 0.85em; }
-        
-        .search-tabs { display: flex; gap: 10px; margin-bottom: 20px; }
-        .tab-btn { flex: 1; padding: 12px; border: 2px solid #dadce0; border-radius: 8px; background: white; cursor: pointer; font-weight: bold; transition: 0.3s; font-size: 14px; }
-        .tab-btn.active-esh { border-color: #1a73e8; color: #1a73e8; background: #e8f0fe; }
-        .tab-btn.active-sefer { border-color: #fbbc04; color: #b08800; background: #fef7e0; }
+        :root {
+            --bg-color: #f4f7f9;
+            --container-bg: #ffffff;
+            --text-color: #1a1a1a;
+            --border-color: #d1d5db;
+            --input-focus: #1a73e8;
+            --primary: #1a73e8;
+            --danger: #ea4335;
+        }
 
-        label { display: block; margin-top: 12px; font-weight: 600; color: #3c4043; }
-        select { width: 100%; padding: 12px; margin-top: 5px; border: 2px solid #dadce0; border-radius: 8px; font-size: 16px; outline: none; background: #fff; }
-        
-        .action-btns { display: flex; gap: 10px; margin-top: 20px; }
-        .calc-btn { flex: 2; background-color: #1a73e8; color: white; padding: 15px; border: none; border-radius: 8px; font-size: 18px; font-weight: bold; cursor: pointer; }
-        .reset-btn { flex: 1; background-color: #ea4335; color: white; padding: 15px; border: none; border-radius: 8px; font-size: 16px; font-weight: bold; cursor: pointer; }
-        .calc-btn:hover { background-color: #1557b0; }
-        .reset-btn:hover { background-color: #c5221f; }
+        [data-theme="dark"] {
+            --bg-color: #121212;
+            --container-bg: #1e1e1e;
+            --text-color: #e8eaed;
+            --border-color: #3c4043;
+            --input-focus: #8ab4f8;
+            --primary: #8ab4f8;
+        }
 
-        .results-container { display: none; margin-top: 25px; }
-        .results-section { padding: 15px; border-radius: 10px; margin-bottom: 15px; }
-        .esh-theme { background-color: #e8f0fe; border: 2px solid #1a73e8; }
-        .sefer-theme { background-color: #fef7e0; border: 2px solid #fbbc04; }
+        body { 
+            font-family: 'Cairo', sans-serif;
+            background-color: var(--bg-color); 
+            color: var(--text-color);
+            display: flex; justify-content: center; align-items: center; 
+            min-height: 100vh; margin: 0; padding: 15px;
+            transition: 0.3s;
+        }
+
+        .container { 
+            background: var(--container-bg); 
+            padding: 30px; border-radius: 24px; 
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1); 
+            width: 100%; max-width: 440px; 
+            position: relative;
+        }
+
+        /* زر الوضع الليلي المنسق */
+        .theme-switch-wrapper { position: absolute; top: 20px; left: 20px; }
+        .theme-btn {
+            padding: 6px 16px; border: 2px solid var(--border-color);
+            border-radius: 12px; background: var(--container-bg);
+            color: var(--text-color); cursor: pointer; font-size: 11px;
+            font-weight: 900; font-family: 'Cairo'; transition: 0.2s;
+        }
+
+        h2 { color: var(--primary); text-align: center; margin: 10px 0 5px 0; font-weight: 900; font-size: 1.5em; }
+        h3 { text-align: center; opacity: 0.7; margin: 0; font-size: 0.9em; font-weight: 700; }
         
-        .section-title { font-weight: bold; color: #202124; border-bottom: 2px solid rgba(0,0,0,0.1); margin-bottom: 10px; padding-bottom: 5px; text-align: center; }
-        .res-item { display: flex; justify-content: space-between; padding: 8px 0; border-bottom: 1px solid rgba(0,0,0,0.05); }
-        .res-label { color: #5f6368; font-weight: 500; }
-        .res-value { font-weight: bold; color: #d93025; font-size: 1.15em; }
-        .divider { border-top: 1px dashed rgba(0,0,0,0.15); margin: 8px 0; }
+        /* أزرار التبديل العلوية */
+        .search-tabs { display: flex; gap: 10px; margin: 25px 0; }
+        .tab-btn { 
+            flex: 1; height: 50px; border: 2px solid var(--border-color); 
+            border-radius: 14px; background: var(--container-bg); color: var(--text-color);
+            cursor: pointer; font-weight: 900; font-size: 14px; font-family: 'Cairo'; transition: 0.3s; 
+        }
+        .tab-btn.active-esh { border-color: #1a73e8; color: white; background: #1a73e8; }
+        .tab-btn.active-sefer { border-color: #fbbc04; color: black; background: #fbbc04; }
+
+        /* تنسيق المدخلات المتناسق */
+        .input-group { margin-bottom: 20px; }
+        label { display: block; font-weight: 800; font-size: 0.95em; margin-bottom: 8px; color: var(--primary); }
+        
+        .vertical-inputs { display: flex; flex-direction: column; gap: 8px; }
+        
+        select, input { 
+            width: 100%; height: 50px; /* توحيد الارتفاع */
+            padding: 0 15px; border: 2px solid var(--border-color); 
+            border-radius: 12px; font-size: 15px; font-weight: 700; font-family: 'Cairo';
+            background: var(--container-bg); color: var(--text-color); 
+            box-sizing: border-box; text-align: center; transition: 0.2s;
+        }
+        
+        input { border-style: dashed; } /* تمييز اليدوي بنقاط */
+        select:focus, input:focus { border-color: var(--input-focus); border-style: solid; outline: none; }
+        
+        /* أزرار الأكشن */
+        .action-btns { display: flex; gap: 10px; margin-top: 30px; }
+        .calc-btn { flex: 2; height: 55px; background: var(--primary); color: white; border: none; border-radius: 15px; font-size: 18px; font-weight: 900; font-family: 'Cairo'; cursor: pointer; transition: 0.2s; }
+        .reset-btn { flex: 1; height: 55px; background: var(--danger); color: white; border: none; border-radius: 15px; font-size: 16px; font-weight: 900; cursor: pointer; }
+        .calc-btn:active { transform: scale(0.97); }
+
+        /* الجدول المنسق */
+        .results-container { display: none; margin-top: 25px; animation: slideUp 0.4s ease; }
+        @keyframes slideUp { from { opacity: 0; transform: translateY(10px); } }
+
+        table { width: 100%; border-collapse: separate; border-spacing: 0; background: var(--container-bg); border-radius: 15px; overflow: hidden; border: 2px solid var(--primary); }
+        th { background: var(--primary); color: white; padding: 12px; font-weight: 900; }
+        td { padding: 12px; text-align: right; border-bottom: 1px solid var(--border-color); font-weight: 700; }
+        .res-val { font-weight: 900; color: var(--danger); font-size: 1.4em; text-align: center; }
+        .cat-title { background: rgba(0,0,0,0.03); color: var(--primary); font-size: 0.85em; }
     </style>
 </head>
-<body>
+<body data-theme="light">
 
 <div class="container">
-    <h2> Test v1.2</h2>
-    <h3> For support call 0525681138 </h3>
-    <div class="subtitle"> - sys cal. MASHKOF - </div>
-
-    <div class="search-tabs">
-        <button class="tab-btn" id="btnEsh" onclick="setMode('esh')">- Refoe ESH</button>
-        <button class="tab-btn" id="btnSefer" onclick="setMode('sefer')">- Refoe SEFER</button>
+    <div class="theme-switch-wrapper">
+        <button id="themeBtn" class="theme-btn" onclick="toggleTheme()">الوضع الليلي</button>
     </div>
 
-    <label>Width - A (العرض):</label>
-    <select id="widthA">
-        <option value="200">200</option><option value="250">250</option>
-        <option value="300">300</option><option value="350">350</option>
-        <option value="400">400</option><option value="450">450</option>
-        <option value="500">500</option>
-    </select>
+    <h2> MASHKOF sys calculation 1.3 </h2>
+    <h3>For Support: 0525681138</h3>
 
-    <label>Height - L (الطول):</label>
-    <select id="lengthL">
-        <option value="2000">2000</option><option value="2100">2100</option>
-    </select>
+    <div class="search-tabs">
+        <button class="tab-btn" id="btnEsh" onclick="setMode('esh')"> Refoe ESH</button>
+        <button class="tab-btn" id="btnSefer" onclick="setMode('sefer')"> Refoe SEFER</button>
+    </div>
 
-    <label>(L.EL.TC) (قياس TC):</label>
-    <select id="tc">
-        <option value="700">700</option><option value="800">800</option>
-        <option value="850">850</option><option value="900">900</option>
-        <option value="1000">1000</option>
-    </select>
+    <div class="input-group">
+        <label>العرض - Width (A)</label>
+        <div class="vertical-inputs">
+            <select id="selA" onchange="document.getElementById('inA').value=this.value">
+                <option value="">Select Value..</option>
+                <option value="200">200</option><option value="250">250</option><option value="300">300</option>
+                <option value="350">350</option><option value="400">400</option><option value="450">450</option><option value="500">500</option>
+            </select>
+            <input type="number" id="inA" placeholder="إدخال قياس يدوي">
+        </div>
+    </div>
+
+    <div class="input-group">
+        <label>الطول - Height (L)</label>
+        <div class="vertical-inputs">
+            <select id="selL" onchange="document.getElementById('inL').value=this.value">
+                <option value="">Select Value.. </option>
+                <option value="2000">2000</option><option value="2100">2100</option>
+            </select>
+            <input type="number" id="inL" placeholder="Manull odd value">
+        </div>
+    </div>
+
+    <div class="input-group">
+        <label>قياس الـ (TC)</label>
+        <div class="vertical-inputs">
+            <select id="selTC" onchange="document.getElementById('inTC').value=this.value">
+                <option value="">Select Value..</option>
+                <option value="700">700</option><option value="800">800</option><option value="850">850</option>
+                <option value="900">900</option><option value="1000">1000</option>
+            </select>
+            <input type="number" id="inTC" placeholder="Manull TC value">
+        </div>
+    </div>
 
     <div class="action-btns">
-        <button class="calc-btn" onclick="calculate()"> CALCULATE Now </button>
-        <button class="reset-btn" onclick="resetAll()"> Reset </button>
+        <button class="calc-btn" onclick="calculate()"> Start</button>
+        <button class="reset-btn" onclick="resetAll()">Reset</button>
     </div>
 
     <div id="all_results" class="results-container"></div>
 </div>
 
 <script>
-    let currentMode = ''; 
+    let currentMode = '';
+
+    function toggleTheme() {
+        const body = document.body;
+        const btn = document.getElementById('themeBtn');
+        const isDark = body.getAttribute('data-theme') === 'dark';
+        body.setAttribute('data-theme', isDark ? 'light' : 'dark');
+        btn.innerText = isDark ? 'الوضع الليلي' : 'الوضع المضيء';
+    }
 
     function setMode(mode) {
         currentMode = mode;
-        document.getElementById('btnEsh').classList.remove('active-esh');
-        document.getElementById('btnSefer').classList.remove('active-sefer');
-        if(mode === 'esh') document.getElementById('btnEsh').classList.add('active-esh');
-        if(mode === 'sefer') document.getElementById('btnSefer').classList.add('active-sefer');
+        document.getElementById('btnEsh').className = 'tab-btn' + (mode === 'esh' ? ' active-esh' : '');
+        document.getElementById('btnSefer').className = 'tab-btn' + (mode === 'sefer' ? ' active-sefer' : '');
     }
 
     function calculate() {
-        if (!currentMode) {
-            alert('يرجى اختيار نوع البحث أولاً من الأزرار العلوية');
-            return;
-        }
+        if (!currentMode) { alert('الرجاء اختيار ESH أو SEFER'); return; }
 
-        const A = parseInt(document.getElementById('widthA').value) || 0;
-        const L = parseInt(document.getElementById('lengthL').value) || 0;
-        const TC = parseInt(document.getElementById('tc').value) || 0;
-        const resultsDiv = document.getElementById('all_results');
+        const A = parseInt(document.getElementById('inA').value) || 0;
+        const L = parseInt(document.getElementById('inL').value) || 0;
+        const TC = parseInt(document.getElementById('inTC').value) || 0;
 
-        let res = {}; // كائن لتخزين النتائج حسب النوع
-
-        if (currentMode === 'esh') {
-            // حسابات ESH الأصلية (التي كانت في أول كود أرسلته)
-            res.cir = A + 264;
-            res.man = A + 204;
-            res.elion = A + 204; // افتراضي بناءً على الكود الأول
-            res.tahton = 346;    // الثابت
-            res.len = L + 171;
-            res.el_ta = TC + 94;
-        } else {
-            // حسابات SEFER المحدثة (التي طلبتها لاحقاً)
-            res.cir = A + 262;
-            res.man = A + 202;
-            res.elion = A + 202;
-            res.tahton = 346;    // الثابت
-            res.len = L + 171;
-            res.el_ta = TC + 94;
-        }
-
-        let themeClass = currentMode === 'esh' ? 'esh-theme' : 'sefer-theme';
-        let titleText = currentMode === 'esh' ? 'Result Refoe ESH (v1.2المعادلة الأصلية)' : 'Result Refoe SEFER (المعادلة v1.3)';
-
-        resultsDiv.innerHTML = `
-            <div class="results-section ${themeClass}">
-                <div class="section-title">${titleText}</div>
-                <div class="res-item"><span class="res-label">عرض السير (CIR):</span> <span class="res-value">${res.cir}</span></div>
-                <div class="res-item"><span class="res-label">عرض المنعول (MAN):</span> <span class="res-value">${res.man}</span></div>
-                <div class="res-item"><span class="res-label">عليون (ELION):</span> <span class="res-value">${res.elion}</span></div>
-                <div class="res-item"><span class="res-label">تحتون (TAHTON):</span> <span class="res-value">${res.tahton}</span></div>
-                <div class="divider"></div>
-                <div class="res-item"><span class="res-label">الطول (LENGTH):</span> <span class="res-value">${res.len}</span></div>
-                <div class="res-item"><span class="res-label">طول عليون/تحتون:</span> <span class="res-value">${res.el_ta}</span></div>
-            </div>`;
+        if(!A || !L || !TC) { alert('الرجاء تعبئة القياسات المطلوبة'); return; }
         
-        resultsDiv.style.display = 'block';
+        let res = (currentMode === 'esh') ? 
+            { cir: A+264, man: A+204, el: A+204, ta: 346, len: L+171, tc: TC+94 } :
+            { cir: A+262, man: A+202, el: A+202, ta: 346, len: L+171, tc: TC+94 };
+
+        document.getElementById('all_results').innerHTML = `
+            <table>
+                <thead><tr><th colspan="2">Result - ${currentMode.toUpperCase()}</th></tr></thead>
+                <tbody>
+                    <tr class="cat-title"><td colspan="2">قسم العرض (A)</td></tr>
+                    <tr><td>عرض السير (CIR)</td><td class="res-val">${res.cir}</td></tr>
+                    <tr><td>عرض المنعول (MAN)</td><td class="res-val">${res.man}</td></tr>
+                    <tr><td>عليون (ELION)</td><td class="res-val">${res.el}</td></tr>
+                    <tr><td>تحتون (TAHTON)</td><td class="res-val">${res.ta}</td></tr>
+                    <tr class="cat-title"><td colspan="2">قسم الطول (L & TC)</td></tr>
+                    <tr><td>الطول الكلي (LENGTH)</td><td class="res-val">${res.len}</td></tr>
+                    <tr><td>عليون / تحتون</td><td class="res-val">${res.tc}</td></tr>
+                </tbody>
+            </table>`;
+        document.getElementById('all_results').style.display = 'block';
+        window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
     }
 
     function resetAll() {
-        document.getElementById('widthA').selectedIndex = 0;
-        document.getElementById('lengthL').selectedIndex = 0;
-        document.getElementById('tc').selectedIndex = 0;
-        const resultsDiv = document.getElementById('all_results');
-        resultsDiv.style.display = 'none';
+        ['inA','inL','inTC','selA','selL','selTC'].forEach(id => document.getElementById(id).value = "");
+        document.getElementById('all_results').style.display = 'none';
         currentMode = '';
-        document.getElementById('btnEsh').classList.remove('active-esh');
-        document.getElementById('btnSefer').classList.remove('active-sefer');
+        document.querySelectorAll('.tab-btn').forEach(b => b.className = 'tab-btn');
     }
 </script>
 
