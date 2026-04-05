@@ -1,0 +1,22 @@
+function calculate() {
+    const A = parseInt(document.getElementById('widthA').value);
+    const L = parseInt(document.getElementById('lengthL').value);
+    const TC = parseInt(document.getElementById('tc').value);
+
+    const TC_CONST = 346; // <-- your constant value
+
+    const W_CIR = A + 264;
+    const W_MAN = A + 204;
+    const LENGTH = L + 171;
+    const EL_TA_LEN = TC + 94;
+
+    document.getElementById('res_w_cir').innerText = W_CIR;
+    document.getElementById('res_w_man').innerText = W_MAN;
+    document.getElementById('res_len').innerText = LENGTH;
+    document.getElementById('res_el_ta').innerText = EL_TA_LEN;
+
+    // show the constant
+    document.getElementById('res_tc_const').innerText = TC_CONST;
+
+    document.getElementById('results').style.display = 'block';
+}
