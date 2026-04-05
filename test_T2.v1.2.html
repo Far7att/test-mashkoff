@@ -1,10 +1,9 @@
-
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MASHKOF REFOE - Test maskof -1.2 </title>
+    <title>MASHKOF REFOE - اكرم فرحات</title>
     <style>
         body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #f0f2f5; display: flex; justify-content: center; align-items: center; min-height: 100vh; margin: 0; padding: 20px; }
         .container { background: white; padding: 25px; border-radius: 15px; box-shadow: 0 10px 25px rgba(0,0,0,0.1); width: 100%; max-width: 500px; }
@@ -40,12 +39,12 @@
 <body>
 
 <div class="container">
-    <h2>0525681138 - Tesg Maskof </h2>
-    <div class="subtitle">v1.2 Test Page - tRIAL</div>
+    <h2>0525681138 - اكرم فرحات</h2>
+    <div class="subtitle">نظام MASHKOF - حسابات منفصلة لكل نوع</div>
 
     <div class="search-tabs">
-        <button class="tab-btn" id="btnEsh" onclick="setMode('esh')">نتائج Refoe ESH</button>
-        <button class="tab-btn" id="btnSefer" onclick="setMode('sefer')">نتائج Refoe SEFER</button>
+        <button class="tab-btn" id="btnEsh" onclick="setMode('esh')">بحث Refoe ESH</button>
+        <button class="tab-btn" id="btnSefer" onclick="setMode('sefer')">بحث Refoe SEFER</button>
     </div>
 
     <label>Width - A (العرض):</label>
@@ -81,17 +80,15 @@
 
     function setMode(mode) {
         currentMode = mode;
-        const btnEsh = document.getElementById('btnEsh');
-        const btnSefer = document.getElementById('btnSefer');
-        btnEsh.classList.remove('active-esh');
-        btnSefer.classList.remove('active-sefer');
-        if(mode === 'esh') btnEsh.classList.add('active-esh');
-        if(mode === 'sefer') btnSefer.classList.add('active-sefer');
+        document.getElementById('btnEsh').classList.remove('active-esh');
+        document.getElementById('btnSefer').classList.remove('active-sefer');
+        if(mode === 'esh') document.getElementById('btnEsh').classList.add('active-esh');
+        if(mode === 'sefer') document.getElementById('btnSefer').classList.add('active-sefer');
     }
 
     function calculate() {
         if (!currentMode) {
-            alert('يرجى اختيار نوع البحث (ESH أو SEFER) من الأعلى');
+            alert('يرجى اختيار نوع البحث أولاً من الأزرار العلوية');
             return;
         }
 
@@ -100,30 +97,41 @@
         const TC = parseInt(document.getElementById('tc').value) || 0;
         const resultsDiv = document.getElementById('all_results');
 
-        // الحسابات الموحدة للطرفين
-        const res_cir = A + 262;
-        const res_man = A + 202;
-        const res_elion = A + 202;
-        const res_tahton = 346;
-        const res_len = L + 171;
-        const res_el_ta = TC + 94;
+        let res = {}; // كائن لتخزين النتائج حسب النوع
+
+        if (currentMode === 'esh') {
+            // حسابات ESH الأصلية (التي كانت في أول كود أرسلته)
+            res.cir = A + 264;
+            res.man = A + 204;
+            res.elion = A + 204; // افتراضي بناءً على الكود الأول
+            res.tahton = 346;    // الثابت
+            res.len = L + 171;
+            res.el_ta = TC + 94;
+        } else {
+            // حسابات SEFER المحدثة (التي طلبتها لاحقاً)
+            res.cir = A + 262;
+            res.man = A + 202;
+            res.elion = A + 202;
+            res.tahton = 346;    // الثابت
+            res.len = L + 171;
+            res.el_ta = TC + 94;
+        }
 
         let themeClass = currentMode === 'esh' ? 'esh-theme' : 'sefer-theme';
-        let titleText = currentMode === 'esh' ? 'Refoe ESH' : 'Refoe SEFER';
+        let titleText = currentMode === 'esh' ? 'نتائج Refoe ESH (المعادلة الأصلية)' : 'نتائج Refoe SEFER (المعادلة المحدثة)';
 
-        let content = `
+        resultsDiv.innerHTML = `
             <div class="results-section ${themeClass}">
                 <div class="section-title">${titleText}</div>
-                <div class="res-item"><span class="res-label">عرض السير (CIR):</span> <span class="res-value">${res_cir}</span></div>
-                <div class="res-item"><span class="res-label">عرض المنعول (MAN):</span> <span class="res-value">${res_man}</span></div>
-                <div class="res-item"><span class="res-label">عليون (ELION):</span> <span class="res-value">${res_elion}</span></div>
-                <div class="res-item"><span class="res-label">تحتون (TAHTON):</span> <span class="res-value">${res_tahton}</span></div>
-                
-                <div class="divider"></div> <div class="res-item"><span class="res-label">الطول (LENGTH):</span> <span class="res-value">${res_len}</span></div>
-                <div class="res-item"><span class="res-label">طول عليون/تحتون:</span> <span class="res-value">${res_el_ta}</span></div>
+                <div class="res-item"><span class="res-label">عرض السير (CIR):</span> <span class="res-value">${res.cir}</span></div>
+                <div class="res-item"><span class="res-label">عرض المنعول (MAN):</span> <span class="res-value">${res.man}</span></div>
+                <div class="res-item"><span class="res-label">عليون (ELION):</span> <span class="res-value">${res.elion}</span></div>
+                <div class="res-item"><span class="res-label">تحتون (TAHTON):</span> <span class="res-value">${res.tahton}</span></div>
+                <div class="divider"></div>
+                <div class="res-item"><span class="res-label">الطول (LENGTH):</span> <span class="res-value">${res.len}</span></div>
+                <div class="res-item"><span class="res-label">طول عليون/تحتون:</span> <span class="res-value">${res.el_ta}</span></div>
             </div>`;
-
-        resultsDiv.innerHTML = content;
+        
         resultsDiv.style.display = 'block';
     }
 
@@ -133,7 +141,6 @@
         document.getElementById('tc').selectedIndex = 0;
         const resultsDiv = document.getElementById('all_results');
         resultsDiv.style.display = 'none';
-        resultsDiv.innerHTML = '';
         currentMode = '';
         document.getElementById('btnEsh').classList.remove('active-esh');
         document.getElementById('btnSefer').classList.remove('active-sefer');
