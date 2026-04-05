@@ -39,12 +39,12 @@
 <body>
 
 <div class="container">
-    <h2>0525681138 - اكرم فرحات</h2>
-    <div class="subtitle">نظام MASHKOF - حسابات منفصلة لكل نوع</div>
+    <h2>0525681138 - Test v1.2</h2>
+    <div class="subtitle"> - sys cal. MASHKOF - </div>
 
     <div class="search-tabs">
-        <button class="tab-btn" id="btnEsh" onclick="setMode('esh')">بحث Refoe ESH</button>
-        <button class="tab-btn" id="btnSefer" onclick="setMode('sefer')">بحث Refoe SEFER</button>
+        <button class="tab-btn" id="btnEsh" onclick="setMode('esh')">- Refoe ESH</button>
+        <button class="tab-btn" id="btnSefer" onclick="setMode('sefer')">- Refoe SEFER</button>
     </div>
 
     <label>Width - A (العرض):</label>
@@ -68,8 +68,8 @@
     </select>
 
     <div class="action-btns">
-        <button class="calc-btn" onclick="calculate()">احسب الآن</button>
-        <button class="reset-btn" onclick="resetAll()">إعادة ضبط</button>
+        <button class="calc-btn" onclick="calculate()"> CALCULATE Now </button>
+        <button class="reset-btn" onclick="resetAll()"> Reset </button>
     </div>
 
     <div id="all_results" class="results-container"></div>
@@ -118,7 +118,7 @@
         }
 
         let themeClass = currentMode === 'esh' ? 'esh-theme' : 'sefer-theme';
-        let titleText = currentMode === 'esh' ? 'نتائج Refoe ESH (المعادلة الأصلية)' : 'نتائج Refoe SEFER (المعادلة المحدثة)';
+        let titleText = currentMode === 'esh' ? 'Result Refoe ESH (v1.2المعادلة الأصلية)' : 'Result Refoe SEFER (المعادلة v1.3)';
 
         resultsDiv.innerHTML = `
             <div class="results-section ${themeClass}">
