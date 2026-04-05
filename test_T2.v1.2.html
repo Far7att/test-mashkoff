@@ -1,0 +1,144 @@
+
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MASHKOF REFOE - Test maskof -1.2 </title>
+    <style>
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #f0f2f5; display: flex; justify-content: center; align-items: center; min-height: 100vh; margin: 0; padding: 20px; }
+        .container { background: white; padding: 25px; border-radius: 15px; box-shadow: 0 10px 25px rgba(0,0,0,0.1); width: 100%; max-width: 500px; }
+        h2 { color: #1a73e8; text-align: center; margin-bottom: 5px; }
+        .subtitle { text-align: center; color: #5f6368; margin-bottom: 20px; font-weight: bold; font-size: 0.85em; }
+        
+        .search-tabs { display: flex; gap: 10px; margin-bottom: 20px; }
+        .tab-btn { flex: 1; padding: 12px; border: 2px solid #dadce0; border-radius: 8px; background: white; cursor: pointer; font-weight: bold; transition: 0.3s; font-size: 14px; }
+        .tab-btn.active-esh { border-color: #1a73e8; color: #1a73e8; background: #e8f0fe; }
+        .tab-btn.active-sefer { border-color: #fbbc04; color: #b08800; background: #fef7e0; }
+
+        label { display: block; margin-top: 12px; font-weight: 600; color: #3c4043; }
+        select { width: 100%; padding: 12px; margin-top: 5px; border: 2px solid #dadce0; border-radius: 8px; font-size: 16px; outline: none; background: #fff; }
+        
+        .action-btns { display: flex; gap: 10px; margin-top: 20px; }
+        .calc-btn { flex: 2; background-color: #1a73e8; color: white; padding: 15px; border: none; border-radius: 8px; font-size: 18px; font-weight: bold; cursor: pointer; }
+        .reset-btn { flex: 1; background-color: #ea4335; color: white; padding: 15px; border: none; border-radius: 8px; font-size: 16px; font-weight: bold; cursor: pointer; }
+        .calc-btn:hover { background-color: #1557b0; }
+        .reset-btn:hover { background-color: #c5221f; }
+
+        .results-container { display: none; margin-top: 25px; }
+        .results-section { padding: 15px; border-radius: 10px; margin-bottom: 15px; }
+        .esh-theme { background-color: #e8f0fe; border: 2px solid #1a73e8; }
+        .sefer-theme { background-color: #fef7e0; border: 2px solid #fbbc04; }
+        
+        .section-title { font-weight: bold; color: #202124; border-bottom: 2px solid rgba(0,0,0,0.1); margin-bottom: 10px; padding-bottom: 5px; text-align: center; }
+        .res-item { display: flex; justify-content: space-between; padding: 8px 0; border-bottom: 1px solid rgba(0,0,0,0.05); }
+        .res-label { color: #5f6368; font-weight: 500; }
+        .res-value { font-weight: bold; color: #d93025; font-size: 1.15em; }
+        .divider { border-top: 1px dashed rgba(0,0,0,0.15); margin: 8px 0; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h2>0525681138 - Tesg Maskof </h2>
+    <div class="subtitle">v1.2 Test Page - tRIAL</div>
+
+    <div class="search-tabs">
+        <button class="tab-btn" id="btnEsh" onclick="setMode('esh')">نتائج Refoe ESH</button>
+        <button class="tab-btn" id="btnSefer" onclick="setMode('sefer')">نتائج Refoe SEFER</button>
+    </div>
+
+    <label>Width - A (العرض):</label>
+    <select id="widthA">
+        <option value="200">200</option><option value="250">250</option>
+        <option value="300">300</option><option value="350">350</option>
+        <option value="400">400</option><option value="450">450</option>
+        <option value="500">500</option>
+    </select>
+
+    <label>Height - L (الطول):</label>
+    <select id="lengthL">
+        <option value="2000">2000</option><option value="2100">2100</option>
+    </select>
+
+    <label>(L.EL.TC) (قياس TC):</label>
+    <select id="tc">
+        <option value="700">700</option><option value="800">800</option>
+        <option value="850">850</option><option value="900">900</option>
+        <option value="1000">1000</option>
+    </select>
+
+    <div class="action-btns">
+        <button class="calc-btn" onclick="calculate()">احسب الآن</button>
+        <button class="reset-btn" onclick="resetAll()">إعادة ضبط</button>
+    </div>
+
+    <div id="all_results" class="results-container"></div>
+</div>
+
+<script>
+    let currentMode = ''; 
+
+    function setMode(mode) {
+        currentMode = mode;
+        const btnEsh = document.getElementById('btnEsh');
+        const btnSefer = document.getElementById('btnSefer');
+        btnEsh.classList.remove('active-esh');
+        btnSefer.classList.remove('active-sefer');
+        if(mode === 'esh') btnEsh.classList.add('active-esh');
+        if(mode === 'sefer') btnSefer.classList.add('active-sefer');
+    }
+
+    function calculate() {
+        if (!currentMode) {
+            alert('يرجى اختيار نوع البحث (ESH أو SEFER) من الأعلى');
+            return;
+        }
+
+        const A = parseInt(document.getElementById('widthA').value) || 0;
+        const L = parseInt(document.getElementById('lengthL').value) || 0;
+        const TC = parseInt(document.getElementById('tc').value) || 0;
+        const resultsDiv = document.getElementById('all_results');
+
+        // الحسابات الموحدة للطرفين
+        const res_cir = A + 262;
+        const res_man = A + 202;
+        const res_elion = A + 202;
+        const res_tahton = 346;
+        const res_len = L + 171;
+        const res_el_ta = TC + 94;
+
+        let themeClass = currentMode === 'esh' ? 'esh-theme' : 'sefer-theme';
+        let titleText = currentMode === 'esh' ? 'Refoe ESH' : 'Refoe SEFER';
+
+        let content = `
+            <div class="results-section ${themeClass}">
+                <div class="section-title">${titleText}</div>
+                <div class="res-item"><span class="res-label">عرض السير (CIR):</span> <span class="res-value">${res_cir}</span></div>
+                <div class="res-item"><span class="res-label">عرض المنعول (MAN):</span> <span class="res-value">${res_man}</span></div>
+                <div class="res-item"><span class="res-label">عليون (ELION):</span> <span class="res-value">${res_elion}</span></div>
+                <div class="res-item"><span class="res-label">تحتون (TAHTON):</span> <span class="res-value">${res_tahton}</span></div>
+                
+                <div class="divider"></div> <div class="res-item"><span class="res-label">الطول (LENGTH):</span> <span class="res-value">${res_len}</span></div>
+                <div class="res-item"><span class="res-label">طول عليون/تحتون:</span> <span class="res-value">${res_el_ta}</span></div>
+            </div>`;
+
+        resultsDiv.innerHTML = content;
+        resultsDiv.style.display = 'block';
+    }
+
+    function resetAll() {
+        document.getElementById('widthA').selectedIndex = 0;
+        document.getElementById('lengthL').selectedIndex = 0;
+        document.getElementById('tc').selectedIndex = 0;
+        const resultsDiv = document.getElementById('all_results');
+        resultsDiv.style.display = 'none';
+        resultsDiv.innerHTML = '';
+        currentMode = '';
+        document.getElementById('btnEsh').classList.remove('active-esh');
+        document.getElementById('btnSefer').classList.remove('active-sefer');
+    }
+</script>
+
+</body>
+</html>
