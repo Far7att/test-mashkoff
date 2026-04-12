@@ -1,217 +1,208 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MASHKOF REFOE PRO v1.3</title>
-    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@600;700;900&display=swap" rel="stylesheet">
-    
-    <style>
-        :root {
-            --bg-color: #f4f7f9;
-            --container-bg: #ffffff;
-            --text-color: #1a1a1a;
-            --border-color: #d1d5db;
-            --input-focus: #1a73e8;
-            --primary: #1a73e8;
-            --danger: #ea4335;
-        }
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MASHKOF SYS CALCULATION v1.3 PRO</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&display=swap" rel="stylesheet">
+  <style>
+    *{box-sizing:border-box;margin:0;padding:0}
 
-        [data-theme="dark"] {
-            --bg-color: #121212;
-            --container-bg: #1e1e1e;
-            --text-color: #e8eaed;
-            --border-color: #3c4043;
-            --input-focus: #8ab4f8;
-            --primary: #8ab4f8;
-        }
+    .app-wrap{--bg:#f1f3f6;--card:#fff;--text:#1a1a1a;--text2:#666;--text3:#999;--border:rgba(0,0,0,0.1);--border2:rgba(0,0,0,0.15);--input-bg:#fff;--sec-bg:#f5f5f5;--res-bg:#f0f4ff;transition:.3s}
+    .app-wrap.dark{--bg:#0f0f0f;--card:#1c1c1c;--text:#e8eaed;--text2:#aaa;--text3:#666;--border:rgba(255,255,255,0.08);--border2:rgba(255,255,255,0.14);--input-bg:#252525;--sec-bg:#252525;--res-bg:#1a2035}
 
-        body { 
-            font-family: 'Cairo', sans-serif;
-            background-color: var(--bg-color); 
-            color: var(--text-color);
-            display: flex; justify-content: center; align-items: center; 
-            min-height: 100vh; margin: 0; padding: 15px;
-            transition: 0.3s;
-        }
+    body{margin:0;padding:0}
+    .app-wrap{background:var(--bg);min-height:100vh;padding:1.5rem;font-family:'Cairo',sans-serif;transition:.3s}
+    .app{max-width:460px;margin:0 auto;display:flex;flex-direction:column;gap:1rem}
+    .card{background:var(--card);border:0.5px solid var(--border);border-radius:16px;padding:1.25rem;transition:.3s}
 
-        .container { 
-            background: var(--container-bg); 
-            padding: 30px; border-radius: 24px; 
-            box-shadow: 0 20px 40px rgba(0,0,0,0.1); 
-            width: 100%; max-width: 440px; 
-            position: relative;
-        }
+    .theme-toggle{display:flex;align-items:center;justify-content:center;gap:10px;margin-bottom:.25rem}
+    .toggle-label{font-size:12px;font-weight:700;color:var(--text2);min-width:28px}
+    .toggle-track{width:52px;height:28px;border-radius:14px;background:#1a73e8;border:none;cursor:pointer;position:relative;transition:.3s;padding:0;flex-shrink:0}
+    .toggle-track.dark-mode{background:#3c4043}
+    .toggle-thumb{position:absolute;top:4px;left:4px;width:20px;height:20px;border-radius:50%;background:#fff;transition:.25s;display:flex;align-items:center;justify-content:center;font-size:11px}
+    .toggle-track.dark-mode .toggle-thumb{left:28px}
 
-        /* زر الوضع الليلي المنسق */
-        .theme-switch-wrapper { position: absolute; top: 20px; left: 20px; }
-        .theme-btn {
-            padding: 6px 16px; border: 2px solid var(--border-color);
-            border-radius: 12px; background: var(--container-bg);
-            color: var(--text-color); cursor: pointer; font-size: 11px;
-            font-weight: 900; font-family: 'Cairo'; transition: 0.2s;
-        }
+    .header{text-align:center;padding:.75rem 0 .25rem}
+    .logo{font-size:1.3rem;font-weight:700;color:var(--text);letter-spacing:-.5px}
+    .logo span{color:#1a73e8}
+    .version-badge{display:inline-block;background:#e8f0fe;color:#1a73e8;font-size:11px;font-weight:700;padding:3px 10px;border-radius:20px;margin-top:6px}
+    .sub{font-size:12px;color:var(--text3);margin-top:6px}
 
-        h2 { color: var(--primary); text-align: center; margin: 10px 0 5px 0; font-weight: 900; font-size: 1.5em; }
-        h3 { text-align: center; opacity: 0.7; margin: 0; font-size: 0.9em; font-weight: 700; }
-        
-        /* أزرار التبديل العلوية */
-        .search-tabs { display: flex; gap: 10px; margin: 25px 0; }
-        .tab-btn { 
-            flex: 1; height: 50px; border: 2px solid var(--border-color); 
-            border-radius: 14px; background: var(--container-bg); color: var(--text-color);
-            cursor: pointer; font-weight: 900; font-size: 14px; font-family: 'Cairo'; transition: 0.3s; 
-        }
-        .tab-btn.active-esh { border-color: #1a73e8; color: white; background: #1a73e8; }
-        .tab-btn.active-sefer { border-color: #fbbc04; color: black; background: #fbbc04; }
+    .mode-tabs{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+    .mode-btn{height:52px;border:2px solid var(--border2);border-radius:12px;background:transparent;color:var(--text2);cursor:pointer;font-weight:700;font-size:14px;font-family:'Cairo',sans-serif;transition:.2s}
+    .mode-btn.active-esh{border-color:#1a73e8;background:#1a73e8;color:#fff}
+    .mode-btn.active-sefer{border-color:#f59e0b;background:#f59e0b;color:#000}
 
-        /* تنسيق المدخلات المتناسق */
-        .input-group { margin-bottom: 20px; }
-        label { display: block; font-weight: 800; font-size: 0.95em; margin-bottom: 8px; color: var(--primary); }
-        
-        .vertical-inputs { display: flex; flex-direction: column; gap: 8px; }
-        
-        select, input { 
-            width: 100%; height: 50px; /* توحيد الارتفاع */
-            padding: 0 15px; border: 2px solid var(--border-color); 
-            border-radius: 12px; font-size: 15px; font-weight: 700; font-family: 'Cairo';
-            background: var(--container-bg); color: var(--text-color); 
-            box-sizing: border-box; text-align: center; transition: 0.2s;
-        }
-        
-        input { border-style: dashed; } /* تمييز اليدوي بنقاط */
-        select:focus, input:focus { border-color: var(--input-focus); border-style: solid; outline: none; }
-        
-        /* أزرار الأكشن */
-        .action-btns { display: flex; gap: 10px; margin-top: 30px; }
-        .calc-btn { flex: 2; height: 55px; background: var(--primary); color: white; border: none; border-radius: 15px; font-size: 18px; font-weight: 900; font-family: 'Cairo'; cursor: pointer; transition: 0.2s; }
-        .reset-btn { flex: 1; height: 55px; background: var(--danger); color: white; border: none; border-radius: 15px; font-size: 16px; font-weight: 900; cursor: pointer; }
-        .calc-btn:active { transform: scale(0.97); }
+    .field-label{font-size:13px;font-weight:700;color:var(--text2);margin-bottom:8px;display:flex;align-items:center;gap:6px}
+    .field-label .tag{background:var(--sec-bg);color:var(--text3);font-size:11px;padding:2px 8px;border-radius:6px;font-weight:600}
+    .input-row{display:grid;grid-template-columns:1fr 1fr;gap:8px}
 
-        /* الجدول المنسق */
-        .results-container { display: none; margin-top: 25px; animation: slideUp 0.4s ease; }
-        @keyframes slideUp { from { opacity: 0; transform: translateY(10px); } }
+    select,input[type=number]{width:100%;height:46px;padding:0 12px;border:1.5px solid var(--border2);border-radius:10px;font-size:14px;font-weight:700;font-family:'Cairo',sans-serif;background:var(--input-bg);color:var(--text);outline:none;transition:.2s}
+    select:focus,input[type=number]:focus{border-color:#1a73e8}
+    input[type=number]{border-style:dashed;text-align:center}
+    input[type=number]::placeholder{font-size:12px;font-weight:400;color:var(--text3)}
 
-        table { width: 100%; border-collapse: separate; border-spacing: 0; background: var(--container-bg); border-radius: 15px; overflow: hidden; border: 2px solid var(--primary); }
-        th { background: var(--primary); color: white; padding: 12px; font-weight: 900; }
-        td { padding: 12px; text-align: right; border-bottom: 1px solid var(--border-color); font-weight: 700; }
-        .res-val { font-weight: 900; color: var(--danger); font-size: 1.4em; text-align: center; }
-        .cat-title { background: rgba(0,0,0,0.03); color: var(--primary); font-size: 0.85em; }
-    </style>
+    .btns{display:grid;grid-template-columns:2fr 1fr;gap:10px;margin-top:.75rem}
+    .calc-btn{height:52px;background:#1a73e8;color:#fff;border:none;border-radius:12px;font-size:16px;font-weight:900;font-family:'Cairo',sans-serif;cursor:pointer;transition:.15s}
+    .calc-btn:active{transform:scale(.97)}
+    .reset-btn{height:52px;background:var(--sec-bg);color:var(--text2);border:0.5px solid var(--border2);border-radius:12px;font-size:14px;font-weight:700;font-family:'Cairo',sans-serif;cursor:pointer}
+
+    .results{display:none;animation:fadeUp .35s ease}
+    @keyframes fadeUp{from{opacity:0;transform:translateY(8px)}}
+    .result-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:1rem}
+    .result-title{font-size:15px;font-weight:700;color:var(--text)}
+    .mode-pill{padding:4px 12px;border-radius:20px;font-size:12px;font-weight:700}
+    .pill-esh{background:#e8f0fe;color:#1a73e8}
+    .pill-sefer{background:#fef3c7;color:#92400e}
+    .section-label{font-size:11px;font-weight:700;color:var(--text3);letter-spacing:.5px;margin:1rem 0 .5rem;padding-bottom:4px;border-bottom:0.5px solid var(--border)}
+    .result-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+    .result-item{background:var(--res-bg);border-radius:10px;padding:.75rem 1rem;display:flex;flex-direction:column;gap:4px}
+    .result-item-label{font-size:12px;color:var(--text3);font-weight:600}
+    .result-item-value{font-size:1.5rem;font-weight:900;color:#1a73e8}
+    .result-item.danger .result-item-value{color:#ea4335}
+  </style>
 </head>
-<body data-theme="light">
+<body>
+<div class="app-wrap" id="appWrap">
+<div class="app" dir="rtl">
 
-<div class="container">
-    <div class="theme-switch-wrapper">
-        <button id="themeBtn" class="theme-btn" onclick="toggleTheme()">الوضع الليلي</button>
+  <div class="card header">
+    <div class="theme-toggle">
+      <span class="toggle-label">☀️</span>
+      <button class="toggle-track" id="themeTrack" onclick="toggleTheme()">
+        <div class="toggle-thumb" id="themeThumb">☀️</div>
+      </button>
+      <span class="toggle-label">🌙</span>
     </div>
+    <div class="logo">MASHKOF <span>SYS</span> CALCULATION</div>
+    <div><span class="version-badge">v1.3 PRO</span></div>
+    <div class="sub">For Support — Akram / Noor: 0525681138-0538392950</div>
+  </div>
 
-    <h2> MASHKOF sys calculation 1.3 </h2>
-    <h3>For Support Akram - Noor : 0525681138 </h3>
-
-    <div class="search-tabs">
-        <button class="tab-btn" id="btnEsh" onclick="setMode('esh')"> Refoe ESH</button>
-        <button class="tab-btn" id="btnSefer" onclick="setMode('sefer')"> Refoe SEFER</button>
+  <div class="card">
+    <div class="field-label">اختر النوع — Mode</div>
+    <div class="mode-tabs">
+      <button class="mode-btn" id="btnEsh" onclick="setMode('esh')">Refoe ESH</button>
+      <button class="mode-btn" id="btnSefer" onclick="setMode('sefer')">Refoe SEFER</button>
     </div>
+  </div>
 
-    <div class="input-group">
-        <label>العرض - Width (A)</label>
-        <div class="vertical-inputs">
-            <select id="selA" onchange="document.getElementById('inA').value=this.value">
-                <option value="">Select Value..</option>
-                <option value="200">200</option><option value="250">250</option><option value="300">300</option>
-                <option value="350">350</option><option value="400">400</option><option value="450">450</option><option value="500">500</option>
-            </select>
-            <input type="number" id="inA" placeholder="إدخال قياس يدوي">
+  <div class="card">
+    <div style="display:flex;flex-direction:column;gap:1rem">
+      <div>
+        <div class="field-label">العرض — Width <span class="tag">A</span></div>
+        <div class="input-row">
+          <select id="selA" onchange="syncManual('selA','inA')">
+            <option value="">اختر قيمة...</option>
+            <option>200</option><option>250</option><option>300</option>
+            <option>350</option><option>400</option><option>450</option><option>500</option>
+          </select>
+          <input type="number" id="inA" placeholder="إدخال يدوي" oninput="clearSel('selA')">
         </div>
-    </div>
-
-    <div class="input-group">
-        <label>الطول - Height (L)</label>
-        <div class="vertical-inputs">
-            <select id="selL" onchange="document.getElementById('inL').value=this.value">
-                <option value="">Select Value.. </option>
-                <option value="2000">2000</option><option value="2100">2100</option>
-            </select>
-            <input type="number" id="inL" placeholder="Manull odd value">
+      </div>
+      <div>
+        <div class="field-label">الطول — Height <span class="tag">L</span></div>
+        <div class="input-row">
+          <select id="selL" onchange="syncManual('selL','inL')">
+            <option value="">اختر قيمة...</option>
+            <option>2000</option><option>2100</option>
+          </select>
+          <input type="number" id="inL" placeholder="قيمة يدوية" oninput="clearSel('selL')">
         </div>
-    </div>
-
-    <div class="input-group">
-        <label>قياس الـ (TC)</label>
-        <div class="vertical-inputs">
-            <select id="selTC" onchange="document.getElementById('inTC').value=this.value">
-                <option value="">Select Value..</option>
-                <option value="700">700</option><option value="800">800</option><option value="850">850</option>
-                <option value="900">900</option><option value="1000">1000</option>
-            </select>
-            <input type="number" id="inTC" placeholder="Manull TC value">
+      </div>
+      <div>
+        <div class="field-label">قياس الـ TC <span class="tag">TC</span></div>
+        <div class="input-row">
+          <select id="selTC" onchange="syncManual('selTC','inTC')">
+            <option value="">اختر قيمة...</option>
+            <option>700</option><option>800</option><option>850</option>
+            <option>900</option><option>1000</option>
+          </select>
+          <input type="number" id="inTC" placeholder="قيمة يدوية" oninput="clearSel('selTC')">
         </div>
+      </div>
     </div>
-
-    <div class="action-btns">
-        <button class="calc-btn" onclick="calculate()"> Start</button>
-        <button class="reset-btn" onclick="resetAll()">Reset</button>
+    <div class="btns">
+      <button class="calc-btn" onclick="calculate()">احسب النتائج</button>
+      <button class="reset-btn" onclick="resetAll()">Reset</button>
     </div>
+  </div>
 
-    <div id="all_results" class="results-container"></div>
+  <div class="card results" id="results">
+    <div class="result-header">
+      <div class="result-title">النتائج</div>
+      <div class="mode-pill" id="modePill"></div>
+    </div>
+    <div class="section-label">قسم العرض (A)</div>
+    <div class="result-grid">
+      <div class="result-item"><div class="result-item-label">عرض السير — CIR</div><div class="result-item-value" id="r-cir">—</div></div>
+      <div class="result-item"><div class="result-item-label">عرض المنعول — MAN</div><div class="result-item-value" id="r-man">—</div></div>
+      <div class="result-item"><div class="result-item-label">عليون — ELION</div><div class="result-item-value" id="r-el">—</div></div>
+      <div class="result-item danger"><div class="result-item-label">تحتون — TAHTON</div><div class="result-item-value" id="r-ta">—</div></div>
+    </div>
+    <div class="section-label" style="margin-top:1.25rem">قسم الطول (L & TC)</div>
+    <div class="result-grid">
+      <div class="result-item"><div class="result-item-label">الطول الكلي — LENGTH</div><div class="result-item-value" id="r-len">—</div></div>
+      <div class="result-item danger"><div class="result-item-label">عليون / تحتون (TC)</div><div class="result-item-value" id="r-tc">—</div></div>
+    </div>
+  </div>
+
+</div>
 </div>
 
 <script>
-    let currentMode = '';
+  let currentMode = '';
+  let isDark = false;
 
-    function toggleTheme() {
-        const body = document.body;
-        const btn = document.getElementById('themeBtn');
-        const isDark = body.getAttribute('data-theme') === 'dark';
-        body.setAttribute('data-theme', isDark ? 'light' : 'dark');
-        btn.innerText = isDark ? 'الوضع الليلي' : 'الوضع المضيء';
-    }
+  function toggleTheme() {
+    isDark = !isDark;
+    const wrap = document.getElementById('appWrap');
+    const track = document.getElementById('themeTrack');
+    const thumb = document.getElementById('themeThumb');
+    wrap.classList.toggle('dark', isDark);
+    track.classList.toggle('dark-mode', isDark);
+    thumb.textContent = isDark ? '🌙' : '☀️';
+  }
 
-    function setMode(mode) {
-        currentMode = mode;
-        document.getElementById('btnEsh').className = 'tab-btn' + (mode === 'esh' ? ' active-esh' : '');
-        document.getElementById('btnSefer').className = 'tab-btn' + (mode === 'sefer' ? ' active-sefer' : '');
-    }
+  function setMode(m) {
+    currentMode = m;
+    document.getElementById('btnEsh').className = 'mode-btn' + (m === 'esh' ? ' active-esh' : '');
+    document.getElementById('btnSefer').className = 'mode-btn' + (m === 'sefer' ? ' active-sefer' : '');
+  }
 
-    function calculate() {
-        if (!currentMode) { alert('الرجاء اختيار ESH أو SEFER'); return; }
+  function syncManual(s, i) { document.getElementById(i).value = document.getElementById(s).value; }
+  function clearSel(s) { document.getElementById(s).value = ''; }
+  function val(id) { return parseInt(document.getElementById(id).value) || 0; }
 
-        const A = parseInt(document.getElementById('inA').value) || 0;
-        const L = parseInt(document.getElementById('inL').value) || 0;
-        const TC = parseInt(document.getElementById('inTC').value) || 0;
+  function calculate() {
+    if (!currentMode) { alert('الرجاء اختيار ESH أو SEFER'); return; }
+    const A = val('inA'), L = val('inL'), TC = val('inTC');
+    if (!A || !L || !TC) { alert('الرجاء تعبئة جميع القياسات'); return; }
+    const r = currentMode === 'esh'
+      ? { cir: A+264, man: A+204, el: A+204, ta: 346, len: L+171, tc: TC+94 }
+      : { cir: A+262, man: A+202, el: A+202, ta: 346, len: L+171, tc: TC+94 };
+    document.getElementById('r-cir').textContent = r.cir;
+    document.getElementById('r-man').textContent = r.man;
+    document.getElementById('r-el').textContent = r.el;
+    document.getElementById('r-ta').textContent = r.ta;
+    document.getElementById('r-len').textContent = r.len;
+    document.getElementById('r-tc').textContent = r.tc;
+    const pill = document.getElementById('modePill');
+    pill.textContent = currentMode === 'esh' ? 'ESH MODE' : 'SEFER MODE';
+    pill.className = 'mode-pill ' + (currentMode === 'esh' ? 'pill-esh' : 'pill-sefer');
+    const res = document.getElementById('results');
+    res.style.display = 'block';
+    res.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
 
-        if(!A || !L || !TC) { alert('الرجاء تعبئة القياسات المطلوبة'); return; }
-        
-        let res = (currentMode === 'esh') ? 
-            { cir: A+264, man: A+204, el: A+204, ta: 346, len: L+171, tc: TC+94 } :
-            { cir: A+262, man: A+202, el: A+202, ta: 346, len: L+171, tc: TC+94 };
-
-        document.getElementById('all_results').innerHTML = `
-            <table>
-                <thead><tr><th colspan="2">Result - ${currentMode.toUpperCase()}</th></tr></thead>
-                <tbody>
-                    <tr class="cat-title"><td colspan="2">قسم العرض (A)</td></tr>
-                    <tr><td>عرض السير (CIR)</td><td class="res-val">${res.cir}</td></tr>
-                    <tr><td>عرض المنعول (MAN)</td><td class="res-val">${res.man}</td></tr>
-                    <tr><td>عليون (ELION)</td><td class="res-val">${res.el}</td></tr>
-                    <tr><td>تحتون (TAHTON)</td><td class="res-val">${res.ta}</td></tr>
-                    <tr class="cat-title"><td colspan="2">قسم الطول (L & TC)</td></tr>
-                    <tr><td>الطول الكلي (LENGTH)</td><td class="res-val">${res.len}</td></tr>
-                    <tr><td>عليون / تحتون</td><td class="res-val">${res.tc}</td></tr>
-                </tbody>
-            </table>`;
-        document.getElementById('all_results').style.display = 'block';
-        window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
-    }
-
-    function resetAll() {
-        ['inA','inL','inTC','selA','selL','selTC'].forEach(id => document.getElementById(id).value = "");
-        document.getElementById('all_results').style.display = 'none';
-        currentMode = '';
-        document.querySelectorAll('.tab-btn').forEach(b => b.className = 'tab-btn');
-    }
+  function resetAll() {
+    ['inA','inL','inTC','selA','selL','selTC'].forEach(id => document.getElementById(id).value = '');
+    document.getElementById('results').style.display = 'none';
+    currentMode = '';
+    document.getElementById('btnEsh').className = 'mode-btn';
+    document.getElementById('btnSefer').className = 'mode-btn';
+  }
 </script>
-
 </body>
 </html>
